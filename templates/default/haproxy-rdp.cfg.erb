@@ -25,7 +25,6 @@ listen rdp 0.0.0.0:<%= node["haproxy"]["incoming_port"] %>
   tcp-request inspect-delay 5s
   tcp-request content accept if RDP_COOKIE
   persist rdp-cookie
-  balance rdp-cookie
   option tcpka
   option tcplog
   option redispatch
