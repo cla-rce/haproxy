@@ -34,9 +34,12 @@ listen rdp 0.0.0.0:<%= node["haproxy"]["incoming_port"] %>
   <% end -%>
 
 <% if node["haproxy"]["enable_admin"] -%>
-listen admin 0.0.0.0:22002
+listen admin <%= node['haproxy']['admin']['address_bind'] %>:<%= node['haproxy']['admin']['port'] %>
   mode http
   stats uri /
   acl allowed_ips src <%= node["haproxy"]["admin"]["allowed_addresses"] %>
-  tcp-request content reject if !allowed_ips 
+  tcp-request content reject if !allowed_ips
+  <% if node ["haproxy"]["admin"]["allow_control"] -%>
+  stats admin if TRUE
+  <% end -%>
 <% end -%>
