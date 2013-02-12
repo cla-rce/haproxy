@@ -39,7 +39,7 @@ listen admin <%= node['haproxy']['admin']['address_bind'] %>:<%= node['haproxy']
   stats uri /
   acl allowed_ips src <%= node["haproxy"]["admin"]["allowed_addresses"] %>
   tcp-request content reject if !allowed_ips
-  <% if node ["haproxy"]["admin"]["allow_control"] -%>
+  <% if node["haproxy"]["admin"]["allow_control"] -%>
   stats admin if TRUE
   <% end -%>
 <% end -%>
