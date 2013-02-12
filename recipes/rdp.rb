@@ -17,7 +17,7 @@
 # limitations under the License.
 #
 
-pool_members = search("node", "role:#{node['haproxy']['app_server_role']} AND chef_environment:#{node.chef_environment}") || []
+pool_members = search("node", "roles:#{node['haproxy']['app_server_role']} AND chef_environment:#{node.chef_environment}") || []
 
 # load balancer may be in the pool
 pool_members << node if node.run_list.roles.include?(node['haproxy']['app_server_role'])
@@ -44,5 +44,5 @@ template "/etc/haproxy/haproxy.cfg" do
   group "root"
   mode 0644
   variables :pool_members => pool_members.uniq
-  notifies :restart, "service[haproxy]"
+  notifies :reload, "service[haproxy]"
 end
