@@ -20,7 +20,8 @@ defaults
         srvtimeout      1h
 
 # Set up rdp listeners here.
-listen rdp 0.0.0.0:<%= node["haproxy"]["incoming_port"] %>
+listen rdp
+  bind :<%= node["haproxy"]["incoming_port"] %> mss 1360
   mode tcp
   tcp-request inspect-delay 5s
   tcp-request content accept if RDP_COOKIE
